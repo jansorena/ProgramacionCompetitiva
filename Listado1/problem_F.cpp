@@ -42,7 +42,6 @@ public:
         }
         for(auto x : map){
             if (x.second.first && x.second.second) solucion++;
-            cout << x.first << " " << x.second.first << " " << x.second.second << endl;
         }       
         return solucion;
     }
