@@ -11,22 +11,16 @@ int main(int argc, char const *argv[]){
             v.push_back(a);
         }
         /* algoritmo */
-        for (int i = 0; i < v.size(); i++){
+        sort(v.begin(),v.end());
+        bool flag = true;
+        for(int i = 0; i < v.size(); i++){
             if(i == v.size()-1) break;
-            cout << "v[i] : " << v[i] << endl;
-            for (int j = i+1; j < v.size(); j++){
-                cout << "v[j] : " << v[j] << endl;
-                if(abs(v[i]-v[j]) <= 1){
-                    int pos;
-                    (v[i] > v[j] ? pos = i : pos = j);
-                    v.erase(v.begin()+pos);
-                    i = 0;
-                }
+            if(abs(v[i]-v[i+1]) > 1){
+                flag = false;
+                break;
             }
         }
-        
-        (v.size() == 1 ? cout << "YES" << endl : cout << "NO" << endl);
-        
+        (flag ? cout << "YES" << endl : cout << "NO" << endl);
     }
 
     return 0;
