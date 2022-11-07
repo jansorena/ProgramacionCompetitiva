@@ -1,31 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main(){
-	string s;
+int main(int argc, char const *argv[]){
+	ios_base::sync_with_stdio(false);
+    cin.tie(0);
+
+	string s; 
 	map<string,int> m;
+	string aux = "";
 	while(getline(cin,s)){
-		if(s != ""){
-			for(int i = 0; i < s.length(); ++i) 
-				s[i] = tolower(s[i]);
-			//cout << s << endl;
-			string aux = "";
-			for (int i = 0; i < s.length(); ++i){
-				if(s[i] == ' ') {
+		if(s == "") continue;
+
+		for (int i = 0; i < s.length(); i++){
+			s[i] = tolower(s[i]);
+			if(s[i] >= 97 && s[i] <= 122) aux += s[i];
+			else{
+				if(s[i] == '-') aux += s[i];
+				else{
 					m[aux] = 0;
 					aux = "";
-				}else if(s[i] > 96 && s[i] < 123){
-					aux += s[i];
-				} 
-			}
-
-			if(aux!= "") {
-				m[aux] = 0;
+				}
 			}
 		}
+
+		if(aux[aux.length()-1] != '-'){
+			m[aux] = 0;
+			aux = "";
+		}else aux.pop_back();
+		
+		
 	}
 
-	for(auto x : m) cout << x.first << endl;
-
+	for (auto x : m) {
+		if(x.first != "") cout << x.first << endl;
+	}
 	return 0;
 }
