@@ -1,48 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct comp { 
-    bool operator()(const pair<int,int>&mypair,const int& n) { 
-        if(mypair.first < n) return 1;
-        return 0;
+int main(){
+	int n,m; cin >> n >> m; // input
+	priority_queue<int> pq[100001];
+	int suma[100001];
+
+    for (int i = 0; i < n; i++){ // input
+    	int s,r; cin >> s >> r;
+    	pq[s].push(r);
     }
 
-    bool operator()(const int& n,const pair<int,int>& mypair) { 
-        if(n < mypair.first)return 1;
-        return 0;
-    } 
-}; 
+    /*
+	se itera por las colas de prioridad sumando su valor en la variable
+	c. Para cada iteracion se guarda el valor acumulado en el arreglo suma
+	donde cada posicion corresponde al numero i de alumnos con una suma valida.
+	En la variable ans se guarda la suma valida de mayor valor.
+    */
 
-int main(){
-	//variables
-	int n, m;
-	int s,r;
-	cin >> n >> m;
-	map<int,int> subjects;
-	priority_queue<int,vector<int>,greater<int>> pq;
-	vector<pair<int,int>> v;
+    int ans = 0;
+    for (int i = 1; i <= m; i++){ 
+    	int k = 0, c = 0;
+    	while(!pq[i].empty()){
+            c += pq[i].top();
+            if(c < 0) break;
+            suma[++k] += c;
+            ans = max(ans,suma[k]);
+            pq[i].pop();
+    	}
+    }
 
-	// algoritmo
-	for (int i = 0; i < n; ++i){
-		cin >> s >> r;
-		v.push_back({s,r});
-		subjects[s]++;
-	}
+    cout << ans;
 
-	for(auto x : subjects){
-		pq.push(x.second);
-	}
-
-	sort(v.begin(),v.end());
-	int sum = 0;
-
-	cout << "---" << endl;
-	for(auto x : subjects){
-		int value = x.second;
-		auto position = upper_bound(v.begin(),v.end(),value,comp());
-		cout << position - v.begin() << endl;
-	}
-
-
-	return 0;
+    return 0;
 }
