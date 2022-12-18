@@ -1,0 +1,8 @@
+Problema puentes (DFS)
+	Puntos de articulacion -> Nodos.
+	Puentes -> Aristas.
+	mismo low implica que estan dentro de un ciclo.
+
+Problema de ciudades infectadas (BFS)
+	1) Crear una ciudad virtual.
+	2) Encolar al inicio las ciudades infectadas.
