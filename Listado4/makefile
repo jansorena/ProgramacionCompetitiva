@@ -1,4 +1,3 @@
 default:
-	g++ -o problem.out problem_A.cpp
+	g++ -o problem.out problem_D.cpp -O2
 	./problem.out < input.txt
-	rm problem.out
