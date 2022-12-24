@@ -1,3 +1,3 @@
 default:
-	g++ -o problem.out problem_D.cpp -O2
+	g++ -o problem.out problem_H.cpp
 	./problem.out < input.txt

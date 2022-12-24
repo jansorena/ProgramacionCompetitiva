@@ -2,14 +2,16 @@
 using namespace std;
 
 int n,m,k;
-int total, vacios = 0;
+int vacios = 0;
 map<pair<int,int>,int> mapa;
 char matriz[500][500];
 bool visited[500][500];
 
+// vectores de direccion alrededor de una posicion
 int dRow[] = { -1, 0, 1, 0 };
 int dCol[] = { 0, 1, 0, -1 };
 
+// dfs para recorrer la matriz
 void dfs(pair<int,int> s){
     int x = s.first;
     int y = s.second;
@@ -18,8 +20,13 @@ void dfs(pair<int,int> s){
     visited[x][y] = true;
 
     //cout << x << " " << y << endl;
+
+    // se resta una posicion vacia y se marca en el mapa
     vacios--;
     mapa[{x,y}] = 1;
+
+    // si las posiciones vacias son igual a k, para cada posicion en el mapa no marcada se cambia por una X
+    // se asegura que todas las posiciones marcadas estan conectadas
     if(vacios == k){
 
         for(auto t: mapa){
@@ -30,7 +37,7 @@ void dfs(pair<int,int> s){
             //cout << x1 << " " << y1 << " " << val << endl;
             if(val == 0) matriz[x1][y1] = 'X';
         }
-
+        // impresion de la matriz
         for(int i = 0; i < n; i++){
             for(int j = 0; j < m; j++){
                 cout << matriz[i][j];
@@ -39,6 +46,7 @@ void dfs(pair<int,int> s){
         }
     }
 
+    // recorridos alrededor de la posicion correspondiente
     for (int i = 0; i < 4; i++){
         int adjx = x + dRow[i];
         int adjy = y + dCol[i];
@@ -66,9 +74,9 @@ int main(){
         }
         //cout << endl;
     }
-    total = vacios - k;
     //cout << vacios << " " << total;
 
+    // dfs a partir de la primera celda vacia
     bool flag = false;
     for(int i = 0; i < n; i++){
         for(int j = 0; j < m; j++){

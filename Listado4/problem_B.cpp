@@ -6,10 +6,11 @@ vector<int> adj[MAXN];
 bool visited[MAXN];
 vector<int> camino;
 
+// dfs desde el ultimo nodo insertado hasta el primero
 void dfs(int s){
 	if(visited[s]) return;
 	visited[s] = true;
-	camino.push_back(s);
+	camino.push_back(s); // agrega a un vector por cada recorrido
 	for (auto u : adj[s]){
 		dfs(u);
 	}

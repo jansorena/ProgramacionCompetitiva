@@ -93,7 +93,7 @@ int main(){
         if(!visited2[i]) dfs2(i);
     }
 
-    // imprimir vector
+    // imprimir nuevo abecedario
     for(auto x : ans){
         cout << char(x+'a');
     }
