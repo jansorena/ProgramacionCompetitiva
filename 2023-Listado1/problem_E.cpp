@@ -1,72 +1,75 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int MAXN = 100005;
-vector<int> adj[MAXN];
-bool visited[MAXN];
-int parent[MAXN];
-
-bool dfs(int node, int root) {
-    visited[node] = true;
-    parent[node] = root;
-
-    for(int i = 0; i < adj[node].size(); i++){
-        int aux = adj[node][i];
-        if(!visited[aux]){
-            if(!dfs(aux,node)) return false;
-            else if(node != parent[aux]) return false;
-        }
-    }
-    return true;
+int distanciaStrings(string a, string b){
+	if(a.length()!=b.length()) return 0;
+	int distancia = 0;
+	for (int i = 0; i < a.length(); ++i) if(a[i] != b[i]) distancia++;
+	return distancia;
 }
 
-bool Rooted(int n, int m){
-    if (m != n-1) return false;
-    int root = -1;
-    for (int i = 0; i < n; i++) {
-        if (adj[i].empty()) {
-            if (root == -1) root = i;
-            else return false;
-        }
-    }
+int main(){
 
-    if (root == -1) return false;
+	#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+	#endif
 
-    memset(visited, false, sizeof visited);
-    memset(parent, 0, sizeof parent);
+	int n; cin >> n;
 
-    if (!dfs(root, 0)) return false;
+	while(n--){
+		vector<string> words;
+		map<string,vector<string>> adj;
+		map<string,bool> visited;
+		map<string,int> distance;
+		string s, aux1, aux2;
+		
+		while(cin >> s){
+			if(s == "*") break;
+			words.push_back(s);
+		}
 
-    for (int i = 1; i <= n; i++) {
-        if (!visited[i]) return false;
-    }
+		cin.ignore();
 
-    return true;
+		for (int i = 0; i < words.size(); ++i){
+			for(int j = i+1; j < words.size(); ++j){
+				if(distanciaStrings(words[i],words[j]) == 1){
+					adj[words[i]].push_back(words[j]);
+					adj[words[j]].push_back(words[i]);
+					visited[words[i]] = false;
+					visited[words[j]] = false;
+				}
+			}
+		}
+
+		while(getline(cin,s)){
+			if(s == "") break;
+			queue<string> q;
+			istringstream iss(s);		
+			iss >> aux1 >> aux2;
+
+			//bfs: camino mas corto
+			visited[aux1] = true;
+			q.push(aux1);
+			while(!q.empty()){
+				string ss = q.front(); q.pop();
+				if(ss == aux2) break;
+				for(auto u : adj[ss]){
+					if(visited[u]) continue;
+					visited[u] = true;
+					distance[u] = distance[ss]+1;
+					q.push(u);
+				}
+			}
+
+			cout << aux1 << " " << aux2 << " " << distance[aux2] << endl;
+			distance.clear();
+			visited.clear();
+		}
+		
+		if(n!=0) cout << endl;
+	}
+
+	return 0;
 }
 
-int main() {
-    int n, m, count = 1;
-    unordered_map<int,int> mymap;
-    int edges = 0;
-    while(cin >> n >> m){
-        if(n == -1 && m == -1) break;
-        if(n == 0 && m == 0){
-            cout << mymap.size() << " " << edges << endl;
-            bool flag = Rooted(mymap.size(),edges);
-            if (flag) cout << "Case " << count << " is a tree." << endl;
-            else cout << "Case " << count << " is not a tree." << endl;
-            count++;
-            mymap.clear();
-            edges = 0;
-            for(int i = 0; i < MAXN; i++){
-                adj[i].clear();
-            }
-        }else{
-            adj[n].push_back(m);
-            mymap[n]++;
-            mymap[m]++;
-            edges++;
-        }
-    }
-    return 0;
-}
