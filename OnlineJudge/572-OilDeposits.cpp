@@ -12,7 +12,7 @@ void dfs(int x, int y){
         visited[x][y] = true;
         for (int i = -1; i <= 1; ++i){
             for(int j = -1; j <= 1; j++){
-                dfs(x+i,y+j);
+                dfs(x+i,y);
             }
         }
     }
