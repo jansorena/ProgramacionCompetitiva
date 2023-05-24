@@ -3,6 +3,7 @@ using namespace std;
 
 #define MAXN 100001
 #define ll long long
+#define MOD 998244353
 
 int main(){
 	ios_base::sync_with_stdio(false);
