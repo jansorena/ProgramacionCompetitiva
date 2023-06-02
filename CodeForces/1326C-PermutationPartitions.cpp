@@ -14,7 +14,7 @@ int main(){
 	freopen("output.txt","w",stdout);
 	#endif
 
-	
+	cout << "Hello World!" << endl;
 
 	return 0;
 }
