@@ -1,1 +1,1 @@
-# Ejercicios Programación Competitiva
+# Competitive Programming Problems
